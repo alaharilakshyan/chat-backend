@@ -9,6 +9,7 @@ const { Server } = require('socket.io');
 // Import routes
 const authRoutes = require('./routes/auth');
 const messageRoutes = require('./routes/message');
+const userRoutes = require('./routes/users');
 // Import models - only declare once!
 const User = require('./models/User');
 const Message = require('./models/Message'); // Single declaration
@@ -31,6 +32,7 @@ app.use(express.json());
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/messages', messageRoutes);
+app.use('/api/users', userRoutes);
 
 // Socket.IO setup
 const io = new Server(httpServer, {
