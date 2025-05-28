@@ -6,7 +6,9 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
     unique: true,
-    trim: true
+    trim: true,
+    minlength: 3,
+    maxlength: 20
   },
   email: {
     type: String,
@@ -22,15 +24,17 @@ const userSchema = new mongoose.Schema({
   avatar: {
     type: String,
     default: 'https://avatar.vercel.sh/default-avatar'
+  },
+  isOnline: {
+    type: Boolean,
+    default: false
+  },
+  lastSeen: {
+    type: Date,
+    default: Date.now
   }
-});
-
-// Password hashing middleware
-userSchema.pre('save', async function (next) {
-  if (this.isModified('password')) {
-    this.passwordHash = await bcrypt.hash(this.password, 10);
-  }
-  next();
+}, { 
+  timestamps: true // Handles createdAt/updatedAt automatically
 });
 
 // Password comparison method
